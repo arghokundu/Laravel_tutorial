@@ -1,7 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CrudController;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+// ===============================================================================
+//                                  CRUD 
+// ===============================================================================
+// -------------------show form-----------------
+Route::get('/formShow',[CrudController::class,'ShowFormStd']);
+// ----------------------store form--------------------
+Route::post('/storeData',[CrudController::class,'storeData']);
