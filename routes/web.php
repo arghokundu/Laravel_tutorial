@@ -14,3 +14,5 @@ Route::get('/', function () {
 Route::get('/formShow',[CrudController::class,'ShowFormStd']);
 // ----------------------store form--------------------
 Route::post('/storeData',[CrudController::class,'storeData']);
+// -----------------------show all List stident-------------
+Route::get('/showAllStudentList',[CrudController::class,'ShowAllStdList']);

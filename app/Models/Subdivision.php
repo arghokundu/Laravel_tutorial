@@ -16,4 +16,9 @@ class Subdivision extends Model
     public  $incrementing=true;
 
     public $timestamp=false;
+
+    public function Student_subdivision()
+    {
+        return $this->hasMany(Student_Curd::class,'subdiv_id_fk','subdiv_id_pk');
+    }
 }

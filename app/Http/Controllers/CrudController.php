@@ -42,11 +42,19 @@ class CrudController extends Controller
         $studentcrud=$studentcrud->save();
         if($studentcrud)
         {
-            return view('CRUD.ShowAllStdDetailsList');
-        }        
+            // return view('CRUD.ShowAllStdDetailsList');
+            return redirect('/showAllStudentList');
+            }        
         else
         {
             return redirect()->back();
         }
+    }
+    // =================================show data in list===================
+    public function ShowAllStdList()
+    {
+        $studentsDetails=Student_Curd::select('student_id_pk','Name','Email','Address','pin',
+            'phoneNo','state_id_fk','district_id_fk','subdiv_id_fk')->get();
+        return view('CRUD.ShowAllStdDetailsList',compact('studentsDetails'));
     }
 }

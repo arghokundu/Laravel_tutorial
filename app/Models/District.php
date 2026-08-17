@@ -16,4 +16,9 @@ class District extends Model
     public  $incrementing=true;
 
     public $timestamp=false;
+
+    public function Student_district()
+    {
+        return $this->hasMany(Student_Curd::class,'district_id_fk','district_id_pk');
+    }
 }

@@ -17,4 +17,9 @@ class State extends Model
 
     public $timestamp=false;
 
+    public function Student_State()
+    {
+        return $this->hasMany(Student_Curd::class,'state_id_fk','state_id_pk');
+    }
+
 }
