@@ -9,6 +9,7 @@ use App\Models\Student_Curd;
 use App\Models\Subdivision;
 use App\Models\District;
 use App\Http\Requests\CrudRequest;
+use Illuminate\Support\Facades\DB;
 
 class CrudController extends Controller
 {
@@ -27,27 +28,38 @@ class CrudController extends Controller
     // ================================store data in db===========================
     public function storeData(CrudRequest $crudreq)
     {
-        $studentcrud=new Student_Curd();
-        
-        $studentcrud->Name=$crudreq->fullname;
-        $studentcrud->Email=$crudreq->email;
-        $studentcrud->Address=$crudreq->address;
-        $studentcrud->pin=$crudreq->pin;
-        $studentcrud->phoneNo=$crudreq->phoneno;
-        $studentcrud->state_id_fk=$crudreq->state;
-        $studentcrud->district_id_fk=$crudreq->district;
-        $studentcrud->subdiv_id_fk=$crudreq->subdivision;
-        $studentcrud->created_at=now();
-        
-        $studentcrud=$studentcrud->save();
-        if($studentcrud)
+        DB::beginTransaction();
+        try
         {
-            // return view('CRUD.ShowAllStdDetailsList');
-            return redirect('/showAllStudentList');
-            }        
-        else
+            $studentcrud=new Student_Curd();
+            
+            $studentcrud->Name=$crudreq->fullname;
+            $studentcrud->Email=$crudreq->email;
+            $studentcrud->Address=$crudreq->address;
+            $studentcrud->pin=$crudreq->pin;
+            $studentcrud->phoneNo=$crudreq->phoneno;
+            $studentcrud->state_id_fk=$crudreq->state;
+            $studentcrud->district_id_fk=$crudreq->district;
+            $studentcrud->subdiv_id_fk=$crudreq->subdivision;
+            $studentcrud->created_at=now();
+            
+            $studentcrud=$studentcrud->save();
+            DB::commit();
+            if($studentcrud)
+            {
+                // return view('CRUD.ShowAllStdDetailsList');
+                return redirect('/showAllStudentList');
+                }        
+            else
+            {
+                return redirect()->back();
+            }
+        }
+        catch(\Exception $e)
         {
-            return redirect()->back();
+            DB::rollback();
+            return redirect()->back()
+                ->with('error', $e->getMessage());
         }
     }
     // =================================show data in list===================
