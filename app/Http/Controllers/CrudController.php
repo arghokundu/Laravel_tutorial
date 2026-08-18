@@ -69,4 +69,15 @@ class CrudController extends Controller
             'phoneNo','state_id_fk','district_id_fk','subdiv_id_fk')->get();
         return view('CRUD.ShowAllStdDetailsList',compact('studentsDetails'));
     }
+    // ====================================edit data===========================
+    public function EditData($studentId)
+    {
+        $studentcrud=Student_Curd::select('student_id_pk','Name','Email','Address','pin','phoneNo','state_id_fk',
+            'district_id_fk','subdiv_id_fk')->findOrFail($studentId);
+        $state=State::select('state_id_pk','state_name')->get();
+        $district=District::select('district_id_pk','state_id_fk','district_name')->get();
+        $subdivision=Subdivision::select('subdiv_id_pk','subdiv_name')->get();
+
+        return view('CRUD.editStdDetailsForm',compact('studentcrud','state','district','subdivision'));
+    }
 }

@@ -36,7 +36,7 @@
             <td>{{$stdDtl->district->district_name}}</td>
             <td>{{$stdDtl->subdivision->subdiv_name}}</td>
             <td>
-                <button><a href="#">Edit</a></button>
+                <button><a href="/editData/{{$stdDtl->student_id_pk}}">Edit</a></button>
                 <button><a href="#">View</a></button>
             </td>
         </tr>

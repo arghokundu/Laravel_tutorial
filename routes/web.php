@@ -16,3 +16,5 @@ Route::get('/formShow',[CrudController::class,'ShowFormStd']);
 Route::post('/storeData',[CrudController::class,'storeData']);
 // -----------------------show all List stident-------------
 Route::get('/showAllStudentList',[CrudController::class,'ShowAllStdList']);
+// ------------------------Edit form-----------------------
+Route::get('/editData/{studentId}',[CrudController::class,'EditData']);
