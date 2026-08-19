@@ -1,5 +1,5 @@
 <div>
-    <form action="#" method="POST">
+    <form action="/updateData/{{$studentcrud->student_id_pk}}" method="POST">
         @csrf
         <label>Name:</label>
         <input type=text name="fullname" id="fullname" 
@@ -87,7 +87,7 @@
         <br>
 
         <button type="submit">
-            Submit
+            Update
         </button>
     </form>
 

@@ -80,4 +80,37 @@ class CrudController extends Controller
 
         return view('CRUD.editStdDetailsForm',compact('studentcrud','state','district','subdivision'));
     }
+    // ==================================update Data=========================
+    public function updateData(CrudRequest $crudreq,$studentId)
+    {
+        //  dd($studentId);
+        DB::beginTransaction();
+        try
+        {
+            $studentgetId=Student_Curd::findOrFail($studentId);
+            $studentgetId->Name=$crudreq->fullname;
+            $studentgetId->Email=$crudreq->email;
+            $studentgetId->Address=$crudreq->address;
+            $studentgetId->pin=$crudreq->pin;
+            $studentgetId->phoneNo=$crudreq->phoneno;
+            $studentgetId->state_id_fk=$crudreq->state;
+            $studentgetId->district_id_fk=$crudreq->district;
+            $studentgetId->subdiv_id_fk=$crudreq->subdivision;
+            $updateStudentDataSave=$studentgetId->save();
+            DB::commit();
+            if($updateStudentDataSave)
+            {
+                return redirect('/showAllStudentList')->with('success','update successfully');
+            }
+            else
+            {
+                return "Update Error";
+            }
+        }
+        catch(\Exception $e)
+        {
+            DB::rollback();
+            dd("update error",$e->getMessage());
+        }
+    }
 }

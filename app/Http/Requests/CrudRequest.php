@@ -23,7 +23,7 @@ class CrudRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'fullname'=>'required|min:2|max:30|regex:/^[A-Za-z]+$/',
+            'fullname'=>'required|min:2|max:30|regex:/^[A-Za-z ]+$/',
             'email'=>'required|email',
             'address'=>'required|min:2|max:50',
             'pin'=>'required|digits:6|regex:/^[0-9]+$/',
