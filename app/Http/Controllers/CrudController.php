@@ -49,7 +49,7 @@ class CrudController extends Controller
             {
                 // return view('CRUD.ShowAllStdDetailsList');
                 return redirect('/showAllStudentList');
-                }        
+            }        
             else
             {
                 return redirect()->back();
@@ -63,10 +63,14 @@ class CrudController extends Controller
         }
     }
     // =================================show data in list===================
-    public function ShowAllStdList()
+    public function ShowAllStdList(Request $r)
     {
         $studentsDetails=Student_Curd::select('student_id_pk','Name','Email','Address','pin',
             'phoneNo','state_id_fk','district_id_fk','subdiv_id_fk')->get();
+            if($r->search)
+            {
+                $studentsDetails=Student_Curd::where('Name','ilike','%'.$r->search.'%')->get();
+            }
         return view('CRUD.ShowAllStdDetailsList',compact('studentsDetails'));
     }
     // ====================================edit data===========================
