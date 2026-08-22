@@ -66,11 +66,13 @@ class CrudController extends Controller
     public function ShowAllStdList(Request $r)
     {
         $studentsDetails=Student_Curd::select('student_id_pk','Name','Email','Address','pin',
-            'phoneNo','state_id_fk','district_id_fk','subdiv_id_fk')->get();
-            if($r->search)
+            'phoneNo','state_id_fk','district_id_fk','subdiv_id_fk');
+            // filled is use for if search field then call
+            if($r->filled('search'))
             {
-                $studentsDetails=Student_Curd::where('Name','ilike','%'.$r->search.'%')->get();
+                $studentsDetails=Student_Curd::where('Name','ilike','%'.$r->search.'%');
             }
+            $studentsDetails=$studentsDetails->paginate(4)->withQueryString();;
         return view('CRUD.ShowAllStdDetailsList',compact('studentsDetails'));
     }
     // ====================================edit data===========================
