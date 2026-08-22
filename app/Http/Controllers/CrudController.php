@@ -10,6 +10,7 @@ use App\Models\Subdivision;
 use App\Models\District;
 use App\Http\Requests\CrudRequest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 
 class CrudController extends Controller
 {
@@ -118,5 +119,13 @@ class CrudController extends Controller
             DB::rollback();
             dd("update error",$e->getMessage());
         }
+    }
+    // =======================view specific data==============
+    public function specificData($studentId)
+    {
+        $specificDataStd=Student_Curd::with('state','district','subdivision')
+            ->select('student_id_pk','Name','Email','Address','pin','phoneNo','state_id_fk',
+            'district_id_fk','subdiv_id_fk')->findOrFail($studentId);
+        return view('CRUD.viewSpecificDtl',compact('specificDataStd'));
     }
 }

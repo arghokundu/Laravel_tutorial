@@ -57,7 +57,7 @@
                             <a href="/editData/{{ $stdDtl->student_id_pk }}" class="btn btn-sm btn-warning">
                                 Edit
                             </a>
-                            <a href="#" class="btn btn-sm btn-info">
+                            <a href="/specific/data/{{$stdDtl->student_id_pk }}" class="btn btn-sm btn-info">
                                 View
                             </a>
                         </div>

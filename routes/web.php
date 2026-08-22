@@ -20,3 +20,5 @@ Route::get('/showAllStudentList',[CrudController::class,'ShowAllStdList']);
 Route::get('/editData/{studentId}',[CrudController::class,'EditData']);
 // ------------------------update form----------------------------
 Route::post('/updateData/{studentId}',[CrudController::class,'updateData']);
+// --------------------------view specific data----------------
+Route::get('/specific/data/{studentId}',[CrudController::class,'specificData']);
