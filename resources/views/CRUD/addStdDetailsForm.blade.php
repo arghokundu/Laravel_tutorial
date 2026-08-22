@@ -91,9 +91,12 @@
                     </div>
                 </div>
 
-                <button class="d-flex justify-content-center btn btn-success mt-3" type="submit">
-                    Submit
-                </button>
+                <div class="d-flex justify-content-between">
+                    <button class="d-flex justify-content-center btn btn-success mt-3" type="submit">
+                        Submit
+                    </button>
+                    <a class="btn btn-warning mt-3" href="/showAllStudentList">Back</a>
+                </div>
             </form>
         </div>
 

@@ -79,6 +79,7 @@ class CrudController extends Controller
     // ====================================edit data===========================
     public function EditData($studentId)
     {
+        $studentId=Crypt::decrypt($studentId);
         $studentcrud=Student_Curd::select('student_id_pk','Name','Email','Address','pin','phoneNo','state_id_fk',
             'district_id_fk','subdiv_id_fk')->findOrFail($studentId);
         $state=State::select('state_id_pk','state_name')->get();
@@ -91,9 +92,11 @@ class CrudController extends Controller
     public function updateData(CrudRequest $crudreq,$studentId)
     {
         //  dd($studentId);
+        $studentId=Crypt::decrypt($studentId);
         DB::beginTransaction();
         try
         {
+            
             $studentgetId=Student_Curd::findOrFail($studentId);
             $studentgetId->Name=$crudreq->fullname;
             $studentgetId->Email=$crudreq->email;
@@ -123,6 +126,7 @@ class CrudController extends Controller
     // =======================view specific data==============
     public function specificData($studentId)
     {
+        $studentId=Crypt::decrypt($studentId);
         $specificDataStd=Student_Curd::with('state','district','subdivision')
             ->select('student_id_pk','Name','Email','Address','pin','phoneNo','state_id_fk',
             'district_id_fk','subdiv_id_fk')->findOrFail($studentId);

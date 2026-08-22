@@ -6,12 +6,12 @@
             <h2> Edit Student Details Form</h2>
         </div>
         <div class="card-body">
-            <form action="/updateData/{{$studentcrud->student_id_pk}}" method="POST">
+            <form action="/updateData/{{ Crypt::encrypt($studentcrud->student_id_pk)}}" method="POST">
                 @csrf
                 <div class="row">
                     <div class="col-md-3">
                         <label>Name:</label>
-                        <input type=text name="fullname" id="fullname" class="form-control" 
+                        <input type=text name="fullname" id="fullname" class="form-control"
                             value="{{old('fullname',$studentcrud->Name ?? 'NA')}}">
                         @error('fullname')
                         <small class="text-danger">{{$message}}</small>
@@ -21,7 +21,7 @@
                     <div class="col-md-3">
                         <label>Email:</label>
                         <input type=email name="email" id="email" class="form-control"
-                             value="{{old('email',$studentcrud->Email ?? 'NA')}}">
+                            value="{{old('email',$studentcrud->Email ?? 'NA')}}">
                         @error('email')
                         <small class="text-danger">{{$message}}</small>
                         @enderror
@@ -29,7 +29,7 @@
                     <div class="col-md-3">
                         <label>Address:</label>
                         <input type=text name="address" id="address" class="form-control"
-                             value="{{old('address',$studentcrud->Address ?? 'NA')}}">
+                            value="{{old('address',$studentcrud->Address ?? 'NA')}}">
                         @error('address')
                         <small class="text-danger">{{$message}}</small>
                         @enderror
@@ -56,7 +56,7 @@
                         <select name="state" id="state" class="form-control">
                             <option>-------Select State----------</option>
                             @foreach($state as $st)
-                            <option value="{{$st->state_id_pk}}" 
+                            <option value="{{$st->state_id_pk}}"
                                 {{old('state',$studentcrud->state_id_fk) == $st->state_id_pk ? 'selected' : ''}}>
                                 {{$st->state_name}}
                             </option>
@@ -99,9 +99,12 @@
                     </div>
                 </div>
 
-                <button class="d-flex justify-content-center btn btn-warning mt-3" type="submit">
-                    Update
-                </button>
+                <div class="d-flex justify-content-between">
+                    <button class="d-flex justify-content-center btn btn-success mt-3" type="submit">
+                        Update
+                    </button>
+                    <a class="btn btn-warning mt-3" href="/showAllStudentList">Back</a>
+                </div>
             </form>
         </div>
 

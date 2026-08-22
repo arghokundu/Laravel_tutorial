@@ -11,7 +11,7 @@
 
                 <form action="/showAllStudentList" method="get" class="mb-4">
                     <div class="d-flex gap-2">
-                        <input type="text" name="search" id="searchName" class="form-control" style="width: 250px;">
+                        <input type="text" name="search" id="searchName" placeholder="Enter Name" class="form-control" style="width: 250px;">
 
                         <button type="submit" class="btn btn-primary">
                             Search
@@ -58,10 +58,10 @@
                             <td>{{ $stdDtl->subdivision->subdiv_name }}</td>
                             <td>
                                 <div class="d-flex gap-1">
-                                    <a href="/editData/{{ $stdDtl->student_id_pk }}" class="btn btn-sm btn-warning">
+                                    <a href="/editData/{{ Crypt::encrypt($stdDtl->student_id_pk) }}" class="btn btn-sm btn-warning">
                                         Edit
                                     </a>
-                                    <a href="/specific/data/{{$stdDtl->student_id_pk }}" class="btn btn-sm btn-info">
+                                    <a href="/specific/data/{{Crypt::encrypt($stdDtl->student_id_pk) }}" class="btn btn-sm btn-info">
                                         View
                                     </a>
                                 </div>
