@@ -9,7 +9,7 @@
 
         <form action="/showAllStudentList" method="get" class="mb-4">
             <div class="d-flex gap-2">
-                <input type="text" name="search" id="search" class="form-control" style="width: 250px;">
+                <input type="text" name="search" id="searchName" class="form-control" style="width: 250px;">
 
                 <button type="submit" class="btn btn-primary">
                     Search
@@ -22,8 +22,8 @@
         </form>
     </div>
 
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover">
+    <div class="table-responsive" >
+        <table class="table table-bordered table-striped table-hover" id="listStd">
             <thead class="table-dark">
                 <tr>
                     <th>Sl.no</th>
@@ -84,4 +84,7 @@
         </div>
     </div>
 </div>
+@push('script')
+<script src="{{asset('assets/js/js/student.js')}}"></script>
+@endpush
 @endsection

@@ -13,6 +13,8 @@
 
 <body>
 @yield('main_content')
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+@stack('script')
 </body>
 
 </html>

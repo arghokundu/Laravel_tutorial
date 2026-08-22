@@ -71,7 +71,7 @@ class CrudController extends Controller
             // filled is use for if search field then call
             if($r->filled('search'))
             {
-                $studentsDetails=Student_Curd::where('Name','ilike','%'.$r->search.'%');
+                $studentsDetails=$studentsDetails->where('Name','ilike','%'.$r->search.'%');
             }
             $studentsDetails=$studentsDetails->paginate(4)->withQueryString();;
         return view('CRUD.ShowAllStdDetailsList',compact('studentsDetails'));
