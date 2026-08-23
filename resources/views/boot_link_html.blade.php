@@ -8,122 +8,9 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <style>
-    /* Loading screen */
-    #loadingScreen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-
-        background: rgba(0, 0, 0, 0.35);
-
-        /* Blur the page behind loader */
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-
-        z-index: 99999;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    /* Loader */
-    .loader {
-        width: 80px;
-        height: 80px;
-        position: relative;
-    }
-
-    .loader span {
-        position: absolute;
-        width: 12px;
-        height: 30px;
-        background: white;
-        border-radius: 10px;
-
-        left: 34px;
-        top: 25px;
-
-        transform-origin: 6px 15px;
-
-        animation: loading 1.2s linear infinite;
-    }
-
-    .loader span:nth-child(1) {
-        transform: rotate(0deg) translateY(-35px);
-        animation-delay: 0s;
-    }
-
-    .loader span:nth-child(2) {
-        transform: rotate(30deg) translateY(-35px);
-        animation-delay: 0.1s;
-    }
-
-    .loader span:nth-child(3) {
-        transform: rotate(60deg) translateY(-35px);
-        animation-delay: 0.2s;
-    }
-
-    .loader span:nth-child(4) {
-        transform: rotate(90deg) translateY(-35px);
-        animation-delay: 0.3s;
-    }
-
-    .loader span:nth-child(5) {
-        transform: rotate(120deg) translateY(-35px);
-        animation-delay: 0.4s;
-    }
-
-    .loader span:nth-child(6) {
-        transform: rotate(150deg) translateY(-35px);
-        animation-delay: 0.5s;
-    }
-
-    .loader span:nth-child(7) {
-        transform: rotate(180deg) translateY(-35px);
-        animation-delay: 0.6s;
-    }
-
-    .loader span:nth-child(8) {
-        transform: rotate(210deg) translateY(-35px);
-        animation-delay: 0.7s;
-    }
-
-    .loader span:nth-child(9) {
-        transform: rotate(240deg) translateY(-35px);
-        animation-delay: 0.8s;
-    }
-
-    .loader span:nth-child(10) {
-        transform: rotate(270deg) translateY(-35px);
-        animation-delay: 0.9s;
-    }
-
-    .loader span:nth-child(11) {
-        transform: rotate(300deg) translateY(-35px);
-        animation-delay: 1s;
-    }
-
-    .loader span:nth-child(12) {
-        transform: rotate(330deg) translateY(-35px);
-        animation-delay: 1.1s;
-    }
-
-    @keyframes loading {
-
-        0%,
-        100% {
-            opacity: 0.25;
-        }
-
-        50% {
-            opacity: 1;
-        }
-    }
-    </style>
+    <!-- loading page css -->
+    <link href="{{asset('assets/css/loading_page.css')}}" rel="stylesheet" >
+    
 
 </head>
 
@@ -131,9 +18,7 @@
 
     <!-- Loading Screen -->
     <div id="loadingScreen">
-
         <div class="loader">
-
             <span></span>
             <span></span>
             <span></span>
@@ -146,74 +31,15 @@
             <span></span>
             <span></span>
             <span></span>
-
         </div>
-
     </div>
 
     @yield('main_content')
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script>
-    // ==========================================
-    // PAGE LOADING
-    // ==========================================
-
-    window.addEventListener('load', function() {
-        $('#loadingScreen').fadeOut(400);
-    });
-
-
-    // ==========================================
-    // LINK CLICK
-    // ==========================================
-
-    $(document).on('click', 'a', function() {
-
-        let href = $(this).attr('href');
-
-        // Ignore empty links
-        if (!href || href === '#' || href === 'javascript:void(0);') {
-            return;
-        }
-
-        // Ignore new tab
-        if ($(this).attr('target') === '_blank') {
-            return;
-        }
-
-        // Show loader
-        $('#loadingScreen').show();
-
-    });
-
-
-    // ==========================================
-    // FORM SUBMIT
-    // ==========================================
-
-    $(document).on('submit', 'form', function() {
-
-        $('#loadingScreen').show();
-
-    });
-
-
-    // ==========================================
-    // BUTTON CLICK
-    // ==========================================
-
-    $(document).on('click', 'button', function() {
-
-        // Don't show twice for submit buttons
-        if ($(this).attr('type') !== 'submit') {
-
-            $('#loadingScreen').show();
-
-        }
-
-    });
-    </script>
+    
+    <!-- loading page js done -->
+    <script src="{{asset('assets/js/js/loading_page.js')}}"> </script>
 
 
     @stack('script')
