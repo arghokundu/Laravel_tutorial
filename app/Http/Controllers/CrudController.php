@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\State;
 use App\Models\Student_Curd;
+use App\Models\Student_Crud_Archive;
 use App\Models\Subdivision;
 use App\Models\District;
 use App\Http\Requests\CrudRequest;
@@ -89,6 +90,41 @@ class CrudController extends Controller
         return view('CRUD.editStdDetailsForm',compact('studentcrud','state','district','subdivision'));
     }
     // ==================================update Data=========================
+    // --------it is normal update-------
+    // public function updateData(CrudRequest $crudreq,$studentId)
+    // {
+    //     //  dd($studentId);
+    //     $studentId=Crypt::decrypt($studentId);
+    //     DB::beginTransaction();
+    //     try
+    //     {
+            
+    //         $studentgetId=Student_Curd::findOrFail($studentId);
+    //         $studentgetId->Name=$crudreq->fullname;
+    //         $studentgetId->Email=$crudreq->email;
+    //         $studentgetId->Address=$crudreq->address;
+    //         $studentgetId->pin=$crudreq->pin;
+    //         $studentgetId->phoneNo=$crudreq->phoneno;
+    //         $studentgetId->state_id_fk=$crudreq->state;
+    //         $studentgetId->district_id_fk=$crudreq->district;
+    //         $studentgetId->subdiv_id_fk=$crudreq->subdivision;
+    //         $updateStudentDataSave=$studentgetId->save();
+    //         DB::commit();
+    //         if($updateStudentDataSave)
+    //         {
+    //             return redirect('/showAllStudentList')->with('success','update successfully');
+    //         }
+    //         else
+    //         {
+    //             return "Update Error";
+    //         }
+    //     }
+    //     catch(\Exception $e)
+    //     {
+    //         DB::rollback();
+    //         dd("update error",$e->getMessage());
+    //     }
+    // }
     public function updateData(CrudRequest $crudreq,$studentId)
     {
         //  dd($studentId);
@@ -98,6 +134,18 @@ class CrudController extends Controller
         {
             
             $studentgetId=Student_Curd::findOrFail($studentId);
+
+            // ===========audit system work here======
+            $ArchivestudentData=$studentgetId->toArray();
+            
+            // ------unset main table primary key------
+            unset($ArchivestudentData['student_id_pk']);
+            // keep original student id 
+            $ArchivestudentData['student_id_pk']=$studentgetId->student_id_pk;
+
+            Student_Crud_Archive::create($ArchivestudentData);
+
+            // ---------then here main table data store ------
             $studentgetId->Name=$crudreq->fullname;
             $studentgetId->Email=$crudreq->email;
             $studentgetId->Address=$crudreq->address;
