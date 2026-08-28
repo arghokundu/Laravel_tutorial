@@ -324,4 +324,16 @@ class UserApiController extends Controller
         $employeeData=$employeeData->paginate(10)->withQueryString();
         return view('API.showAllUser',compact('employeeData'));
     }
+    // ------------------specific view----------
+    public function specificView($employeeId)
+    {
+        $empdata=Employee_Dtl::with('Employee_Hair','Emplyee_DtlsAddress','Employee_DtlsBank','Employee_Dtlscompany',
+            'Employee_Dtlscompany.Company_dtlsAddress')
+            ->select('emp_id_pk','firstName','maidenName','lastName',
+            'age','gender','email','phone','username','birthday',
+            'bloodGroup','university','company_id_fk','emp_hair_id_fk',
+            'emp_address_id_fk','emp_bank_id_fk','height','weight','eyeColor')->findOrFail($employeeId);
+     
+        return view('API.specificEmployeeDtl',compact('empdata'));
+    }
 }

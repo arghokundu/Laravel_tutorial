@@ -68,7 +68,7 @@
                                 {{$empdata->Employee_Dtlscompany->name ?? 'NA'}}
                             </td>
                             <td class="d-flex justify-content-between">
-                                <a href="#" class=" btn btn-sm btn-success me-2">
+                                <a href="/api/specific/view/{{$empdata->emp_id_pk}}" class=" btn btn-sm btn-success me-2">
                                     View
                                 </a>
                                 <a href="#" class=" btn btn-sm btn-warning">

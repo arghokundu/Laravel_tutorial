@@ -14,3 +14,6 @@ Route::get('/fetch/api/users',[UserApiController::class,'getUserApiFetch']);
 Route::post('/store/api/users',[UserApiController::class,'storeUserApiData']);
 
 Route::get('/showAll/api/users',[UserApiController::class,'showAllUsersApi']);
+
+// -----------specific view----------
+Route::get('/specific/view/{employeeId}',[UserApiController::class,'specificView']);
