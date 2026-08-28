@@ -1,9 +1,47 @@
 // ==========================================
-    // PAGE LOADING
+    // PAGE LOAD
     // ==========================================
 
-    window.addEventListener('load', function() {
-        $('#loadingScreen').fadeOut(400);
+    window.addEventListener('load', function () {
+
+        $('#loadingScreen').stop(true, true).hide();
+
+    });
+
+
+    // ==========================================
+    // PAGE SHOW
+    // ==========================================
+
+    window.addEventListener('pageshow', function () {
+
+        $('#loadingScreen').stop(true, true).hide();
+
+    });
+
+
+    // ==========================================
+    // FORM SUBMISSION
+    // ==========================================
+    // IMPORTANT:
+    // Do NOT show loader here.
+    //
+    // Why?
+    // Your custom validation may call preventDefault().
+    // If loader is shown here, it will remain visible.
+    //
+    // Instead, beforeunload below will show the loader
+    // ONLY when the browser actually leaves the page.
+
+    
+    // ==========================================
+    // ACTUAL PAGE NAVIGATION
+    // ==========================================
+
+    window.addEventListener('beforeunload', function () {
+
+        $('#loadingScreen').stop(true, true).show();
+
     });
 
 
@@ -11,7 +49,7 @@
     // LINK CLICK
     // ==========================================
 
-    $(document).on('click', 'a', function() {
+    $(document).on('click', 'a', function (e) {
 
         let href = $(this).attr('href');
 
@@ -25,34 +63,37 @@
             return;
         }
 
-        // Show loader
-        $('#loadingScreen').show();
+        /*
+         * Do NOT show loader here.
+         *
+         * beforeunload will show it when the
+         * browser actually navigates.
+         */
 
     });
 
 
     // ==========================================
-    // FORM SUBMIT
+    // AJAX START
     // ==========================================
 
-    $(document).on('submit', 'form', function() {
+    $(document).ajaxStart(function () {
 
-        $('#loadingScreen').show();
+        $('#loadingScreen')
+            .stop(true, true)
+            .show();
 
     });
 
 
     // ==========================================
-    // BUTTON CLICK
+    // AJAX COMPLETE
     // ==========================================
 
-    $(document).on('click', 'button', function() {
+    $(document).ajaxStop(function () {
 
-        // Don't show twice for submit buttons
-        if ($(this).attr('type') !== 'submit') {
-
-            $('#loadingScreen').show();
-
-        }
+        $('#loadingScreen')
+            .stop(true, true)
+            .fadeOut(300);
 
     });
