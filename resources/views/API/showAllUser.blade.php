@@ -35,7 +35,7 @@
                             <th>Birthday</th>
                             <th>BloodGroup</th>
                             <th>Address</th>
-                            <th>Bank Name</th>
+                            <th class="text-nowrap">Bank Card Type</th>
                             <th>Company</th>
                             <th>Action</th>
                         </tr>
@@ -54,9 +54,19 @@
                             <td class="text-nowrap">{{$empdata->username}}</td>
                             <td class="text-nowrap">{{$empdata->birthday}}</td>
                             <td>{{$empdata->bloodGroup}}</td>
-                            <td class="text-nowrap"></td>
-                            <td class="text-nowrap"></td>
-                            <td class="text-nowrap"></td>
+                            <td class="text-nowrap">
+                                Address:{{$empdata->Emplyee_DtlsAddress->address ?? 'NA'}},
+                                City:{{$empdata->Emplyee_DtlsAddress->city ?? 'NA'}},<br/>
+                                State:{{$empdata->Emplyee_DtlsAddress->state ?? 'NA'}},
+                                Postal Code:{{$empdata->Emplyee_DtlsAddress->postalCode ?? 'NA'}},
+                                Country:{{$empdata->Emplyee_DtlsAddress->country ?? 'NA'}}
+                            </td>
+                            <td class="text-nowrap">
+                                {{$empdata->Employee_DtlsBank->cardType ?? 'NA'}}
+                            </td>
+                            <td class="text-nowrap">
+                                {{$empdata->Employee_Dtlscompany->name ?? 'NA'}}
+                            </td>
                             <td class="d-flex justify-content-between">
                                 <a href="#" class=" btn btn-sm btn-success me-2">
                                     View

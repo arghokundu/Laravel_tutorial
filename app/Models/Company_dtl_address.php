@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Company_dtl_address extends Model
 {
@@ -17,4 +18,9 @@ class Company_dtl_address extends Model
     public $incrementing=true;
 
     public $timestamp=false;
+
+    public function Company_dtlsAddress()
+    {
+        return $this->hasMany(Employee_Company::class,'company_address_fk','company_address_pk');
+    }
 }

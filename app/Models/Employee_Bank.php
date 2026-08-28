@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Employee_Bank extends Model
 {
@@ -17,4 +18,9 @@ class Employee_Bank extends Model
     public $incrementing=true;
 
     public $timestamp=false;
+
+    public function Employee_BankDtl()
+    {
+        return $this->hasMany(Employee_Dtl::class,'emp_bank_id_fk','emp_bank_id_pk');
+    }
 }
