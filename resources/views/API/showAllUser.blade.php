@@ -4,6 +4,21 @@
     <div class="card">
         <div class="card-header">
             <h2>Show All Data Users</h2>
+            
+            <form action="/api/showAll/api/users" method="get" class="mb-4">
+                <div class="d-flex gap-2 ">
+                    <input type="text" name="search" id="searchName" placeholder="search by email" class="form-control"
+                        style="width: 250px;">
+
+                    <button type="submit" class="btn btn-primary">
+                        Search
+                    </button>
+
+                    <a href="/api/showAll/api/users" class="btn btn-secondary">
+                        Reset
+                    </a>
+                </div>
+            </form>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -26,12 +41,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                     @foreach($employeeData as $empdata)
+                        @foreach($employeeData as $empdata)
                         <tr>
                             <td>{{$loop->iteration}}</td>
                             <td class="text-nowrap">
-                              {{$empdata->firstName}} {{$empdata->maidenName}} {{$empdata->lastName}}
-                           </td>
+                                {{$empdata->firstName}} {{$empdata->maidenName}} {{$empdata->lastName}}
+                            </td>
                             <td>{{$empdata->age}}</td>
                             <td>{{$empdata->gender}}</td>
                             <td class="text-nowrap">{{$empdata->email}}</td>
@@ -56,7 +71,7 @@
                 </table>
             </div>
             <div class="mt-3">
-               {{$employeeData->links('pagination::bootstrap-5')}}
+                {{$employeeData->links('pagination::bootstrap-5')}}
             </div>
         </div>
     </div>
