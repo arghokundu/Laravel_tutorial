@@ -74,7 +74,7 @@ class CrudController extends Controller
             {
                 $studentsDetails=$studentsDetails->where('Name','ilike','%'.$r->search.'%');
             }
-            $studentsDetails=$studentsDetails->paginate(4)->withQueryString();;
+            $studentsDetails=$studentsDetails->paginate(4)->withQueryString();
         return view('CRUD.ShowAllStdDetailsList',compact('studentsDetails'));
     }
     // ====================================edit data===========================

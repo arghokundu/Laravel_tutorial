@@ -12,3 +12,5 @@ Route::get('/user', function (Request $request) {
 Route::get('/fetch/api/users',[UserApiController::class,'getUserApiFetch']);
 
 Route::post('/store/api/users',[UserApiController::class,'storeUserApiData']);
+
+Route::get('/showAll/api/users',[UserApiController::class,'showAllUsersApi']);

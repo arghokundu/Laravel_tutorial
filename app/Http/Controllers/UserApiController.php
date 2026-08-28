@@ -305,4 +305,18 @@ class UserApiController extends Controller
             ], 500);
         }
     }
+
+    // -------------------show all users------------------
+    public function showAllUsersApi(Request $rsearch)
+    {
+        $employeeData=Employee_Dtl::select('emp_id_pk','firstName','maidenName','lastName','age','gender',
+            'email','phone','username','birthday','bloodGroup','university','company_id_fk','emp_hair_id_fk',
+            'emp_address_id_fk','emp_bank_id_fk','height','weight','eyeColor');
+        if($rsearch->search)
+        {
+            $employeeData=Employee_Dtl::where('email','ilike','%'.$rsearch->search.'%');
+        }
+        $employeeData=$employeeData->paginate(10)->withQueryString();
+        return view('API.showAllUser',compact('employeeData'));
+    }
 }
