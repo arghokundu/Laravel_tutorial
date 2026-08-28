@@ -42,7 +42,7 @@ class UserApiController extends Controller
     {
         // -------------function calll---------------
         $usersDataApi=$this->getUserApiFetch();
-
+        $usersDataApi=$usersDataApi['users'] ?? [];
         // -------check users api empty or not-----
         if (empty($usersDataApi)) 
         {
@@ -51,132 +51,227 @@ class UserApiController extends Controller
                 'message' => 'No users found'
             ], 404);
         }
-        /*
-        |--------------------------------------------------------------------------
-        | Arrays for bulk insertion
-        |--------------------------------------------------------------------------
-        */
-        $employeeData = [];
-        $hairData = [];
-        $addressData = [];
-        $bankData = [];
-        $companyData = [];
-        $companyAddressData = [];
+        // ========================================================
+        // START TRANSACTION
+        // ========================================================
 
-        // --------------------------transaction start here-----------
         DB::beginTransaction();
-        try
-        {
-            // ------------------employee hair----------
-            $emp_Hair=new Employee_hair();
-            foreach($usersDataApi as $empHair)
-            {
-                $hairData[]=[
-                    // ---here hair is nested so first access hair then type or color
-                    $emp_Hair->color=$empHair['hair']['color'] ?? '0',  
-                    $emp_Hair->type=$empHair['hair']['type'] ?? '0',
-                    $emp_Hair->created_at=now(),
-                    $emp_Hair->updated_at=now(),
+
+        try {
+
+            // ====================================================
+            // ARRAYS FOR BULK INSERT
+            // ====================================================
+
+            $hairData = [];
+            $addressData = [];
+            $bankData = [];
+            $companyAddressData = [];
+            $companyData = [];
+            $employeeData = [];
+            // ====================================================
+            // LOOP API USERS
+            // ====================================================
+            foreach ($usersDataApi as $user) {
+                // =================================================
+                // GET AUTO-INCREMENT IDS FROM POSTGRESQL SEQUENCES
+                // =================================================
+                
+                // |--------------------------------------------------------------------------
+                // | IMPORTANT
+                // |--------------------------------------------------------------------------
+                // |
+                // | These IDs are NOT manually created.
+                // |
+                // | PostgreSQL generates them using the same sequence
+                // | that your DEFAULT nextval() uses.
+                // 
+                // --------------------------------------------------------------------------
+                //
+                $hairIdPk = DB::selectOne("SELECT nextval('employee_hair_emp_hair_id_pk_seq') AS id")->id;
+
+                $addressIdPk = DB::selectOne("SELECT nextval('employee_address_emp_address_id_pk_seq') AS id")->id;
+
+                $bankIdPk = DB::selectOne("SELECT nextval('employee_bank_dtls_emp_bank_id_pk_seq') AS id")->id;
+
+                $companyAddressIdPk = DB::selectOne("SELECT nextval('employee_company_dtl_address_company_address_pk_seq') AS id")->id;
+
+                $companyIdPk = DB::selectOne("SELECT nextval('employee_company_dtl_company_id_pk_seq') AS id")->id;
+
+                $employeeIdPk = DB::selectOne("SELECT nextval('employee_dtl_emp_id_pk_seq') AS id")->id;
+
+                // =================================================
+                // 1. EMPLOYEE HAIR
+                // =================================================
+                $hairData[] = [
+                    'emp_hair_id_pk' => $hairIdPk,
+                    'color' => $user['hair']['color'] ?? null,
+                    'type' => $user['hair']['type'] ?? null,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+                // =================================================
+                // 2. EMPLOYEE ADDRESS
+                // =================================================
+                $addressData[] = [
+                    'emp_address_id_pk' => $addressIdPk,
+                    'address' =>$user['address']['address'] ?? null,
+                    'city' =>$user['address']['city'] ?? null,
+                    'state' =>$user['address']['state'] ?? null,
+                    'stateCode' =>$user['address']['stateCode'] ?? null,
+                    'postalCode' =>$user['address']['postalCode'] ?? null,
+                    'country' =>$user['address']['country'] ?? null,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+                // =================================================
+                // 3. EMPLOYEE BANK
+                // =================================================
+                $bankData[] = [
+                    'emp_bank_id_pk' => $bankIdPk,
+                    'cardExpire' =>$user['bank']['cardExpire'] ?? null,
+                    'cardNumber' =>$user['bank']['cardNumber'] ?? null,
+                    'cardType' =>$user['bank']['cardType'] ?? null,
+                    'currency' =>$user['bank']['currency'] ?? null,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+                // =================================================
+                // 4. COMPANY ADDRESS
+                // =================================================
+                $companyAddressData[] = [
+                    'company_address_pk' => $companyAddressIdPk,
+                    'address' =>$user['company']['address']['address'] ?? null,
+                    'city' =>$user['company']['address']['city'] ?? null,
+                    'state' =>$user['company']['address']['state'] ?? null,
+                    'stateCode' =>$user['company']['address']['stateCode'] ?? null,
+                    'postalCode' =>$user['company']['address']['postalCode'] ?? null,
+                    'country' =>$user['company']['address']['country'] ?? null,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+                // =================================================
+                // 5. EMPLOYEE COMPANY
+                // =================================================
+                $companyData[] = [
+                    'company_id_pk' => $companyIdPk,
+                    'department' =>$user['company']['department'] ?? null,
+                    'name' =>$user['company']['name'] ?? null,
+                    'title' =>$user['company']['title'] ?? null,
                     
+                    // |--------------------------------------------------------------------------
+                    // | FOREIGN KEY
+                    // |--------------------------------------------------------------------------
+                    // | employee_company_dtl.company_address_fk
+                    // | references
+                    // | employee_company_dtl_address.company_address_pk
+                    
+                    'company_address_fk' =>$companyAddressIdPk,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+                // =================================================
+                // 6. EMPLOYEE DETAILS
+                // =================================================
+                $employeeData[] = [
+                    'emp_id_pk' => $employeeIdPk,
+                    'firstName' =>$user['firstName'] ?? null,
+                    'maidenName' =>$user['maidenName'] ?? null,
+                    'lastName' =>$user['lastName'] ?? null,
+
+                    'age' =>$user['age'] ?? null,
+                    'gender' =>$user['gender'] ?? null,
+                    'email' =>$user['email'] ?? null,
+                    'phone' =>$user['phone'] ?? null,
+                    'username' =>$user['username'] ?? null,
+
+                    'birthday' => $user['birthDate'] ?? null,
+                    'bloodGroup' =>$user['bloodGroup'] ?? null,
+                    'height' =>$user['height'] ?? null,
+                    'weight' =>$user['weight'] ?? null,
+                    'eyeColor' =>$user['eyeColor'] ?? null,
+                    'university' =>$user['university'] ?? null,
+                    // =============================================
+                    // FOREIGN KEYS
+                    // =============================================
+                    'emp_hair_id_fk' =>$hairIdPk,
+                    'emp_address_id_fk' =>$addressIdPk,
+                    'emp_bank_id_fk' =>$bankIdPk,
+                    'company_id_fk' => $companyIdPk,
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ];
             }
-            // -----------------employee address--------
-            $emp_Address=new Employee_Address();
-            foreach($usersDataApi as $empAddress)
+
+
+            // ====================================================
+            // BULK INSERT
+            // ====================================================
+            
+            // |--------------------------------------------------------------------------
+            // | INSERT ORDER IS VERY IMPORTANT
+            // |--------------------------------------------------------------------------
+            // | Parent tables must be inserted before child tables.
+            // |--------------------------------------------------------------------------
+            
+            // ----------------------------------------------------
+            // 1. HAIR
+            // ----------------------------------------------------
+            $hair=DB::table('employee_hair')->insert($hairData);
+            // ----------------------------------------------------
+            // 2. EMPLOYEE ADDRESS
+            // ----------------------------------------------------
+            $address=DB::table('employee_address')->insert($addressData);
+            // ----------------------------------------------------
+            // 3. EMPLOYEE BANK
+            // ----------------------------------------------------
+            $bank=DB::table('employee_bank_dtls')->insert($bankData);
+            // ----------------------------------------------------
+            // 4. COMPANY ADDRESS
+            // ---------------------------------------------------
+            $companyAddress=DB::table('employee_company_dtl_address')->insert($companyAddressData);
+            // ----------------------------------------------------
+            // 5. COMPANY
+            // ----------------------------------------------------
+            $companyDtl=DB::table('employee_company_dtl')->insert($companyData);
+            // ----------------------------------------------------
+            // 6. EMPLOYEE DETAILS
+            // ----------------------------------------------------
+            $employeeDtl=DB::table('employee_dtl')->insert($employeeData);
+            
+
+            // -----------check all are entry perfectly or not -----------
+            $successAllDataEntry=($hair && $address && $bank && $companyAddress && $companyDtl && $employeeDtl);
+            if(!$successAllDataEntry)
             {
-                $addressData[]=[
-                    $emp_Address->address=$empAddress['address']['address'] ?? '0',
-                    $emp_Address->city=$empAddress['address']['city'] ?? '0',
-                    $emp_Address->state=$empAddress['address']['state'] ?? '0',
-                    $emp_Address->stateCode=$empAddress['address']['stateCode'] ?? '0',
-                    $emp_Address->postalCode=$empAddress['address']['postalCode'] ?? '0',
-                    $emp_Address->country=$empAddress['address']['country'] ?? '0',
-                    $emp_Address->created_at=now(),
-                    $emp_Address->updated_at=now(),
-                ];
-            }
-            // ------------------employee bank------------
-            $emp_Bank=new Employee_Bank();
-            foreach($usersDataApi as $empBank)
-            {
-                $bankData[]=[
-                    $emp_Bank->cardExpire=$empBank['bank']['cardExpire'] ?? '0',
-                    $emp_Bank->cardNumber=$empBank['bank']['cardNumber'] ?? '0',
-                    $emp_Bank->cardType=$empBank['bank']['cardType'] ?? '0',
-                    $emp_Bank->currency=$empBank['bank']['currency'] ?? '0',
-                    $emp_Bank->created_at=now(),
-                    $emp_Bank->updated_at=now(),
-                ];
-            }
-            // ------------------company dtl address---------
-            $company_Address=new Company_dtl_address();
-            foreach($usersDataApi as $CompanyAddress)
-            {
-                $companyAddressData[]=[
-                    $company_Address->address=$CompanyAddress['company']['address']['address'] ?? '0',
-                    $company_Address->city=$CompanyAddress['company']['address']['city'] ?? '0',
-                    $company_Address->state=$CompanyAddress['company']['address']['state'] ?? '0',
-                    $company_Address->stateCode=$CompanyAddress['company']['address']['stateCode'] ?? '0',
-                    $company_Address->postalCode=$CompanyAddress['company']['address']['postalCode'] ?? '0',
-                    $company_Address->country=$CompanyAddress['company']['address']['country'] ?? '0',
-                    $company_Address->created_at=now(),
-                    $company_Address->updated_at=now(),
-                ];
-            }
-            // -------------------employee company----------
-            $emp_Company=new Employee_Company();
-            foreach($usersDataApi as $empCompany)
-            {
-                $companyData[]=[
-                    $emp_Company->department=$empCompany['company']['department'] ?? '0',
-                    $emp_Company->name=$empCompany['company']['name'] ?? '0',
-                    $emp_Company->title=$empCompany['company']['title'] ?? '0',
-                    $emp_Company->company_address_fk=$empCompany[$companyAddressData['company_address_pk']] ?? '0',
-                    $emp_Company->created_at=now(),
-                    $emp_Company->updated_at=now(),
-                ];
-            }
-            // -----------------employee_details table data store----------------
-            $emp_Dtl=new Employee_Dtl();
-            foreach($usersDataApi as $userData)
-            {
-                $employeeData[]=[
-                    $emp_Dtl->firstName=>$userData['firstName'] ?? '0',
-                    $emp_Dtl->maidenName=>$userData['maidenName'] ?? '0',
-                    $emp_Dtl->lastName=>$userData['lastName'] ?? '0',
-                    $emp_Dtl->age=>$userData['age'] ?? '0',
-                    $emp_Dtl->gender=>$userData['gender'] ?? '0',
-                    $emp_Dtl->email=>$userData['email'] ?? '0',
-                    $emp_Dtl->phone=>$userData['phone'] ?? '0',
-                    $emp_Dtl->username=>$userData['username'] ?? '0',
-                    $emp_Dtl->birthday=>$userData['birthDate'] ?? '0',
-                    $emp_Dtl->bloodGroup=>$userData['bloodGroup'] ?? '0',
-                    $emp_Dtl->height=>$userData['height'] ?? '0',
-                    $emp_Dtl->weight=>$userData['weight'] ?? '0',
-                    $emp_Dtl->eyeColor=>$userData['eyeColor'] ?? '0',
-                    $emp_Dtl->university=>$userData['university'] ?? '0',
-                    $emp_Dtl->emp_hair_id_fk=>$userData[$hairData['emp_hair_id_pk']] ?? '0',
-                    $emp_Dtl->emp_address_id_fk=>$userData[$addressData['emp_address_id_pk']] ?? '0',
-                    $emp_Dtl->emp_bank_id_fk=>$userData[$bankData['emp_bank_id_pk']] ?? '0',
-                    $emp_Dtl->company_id_fk=>$userData[$companyData['company_id_pk']] ?? '0',
-                    $emp_Dtl->created_at=>now() ?? '0',
-                    $emp_Dtl->updated_at=>now() ?? '0',
-                ];
-            }
-            if($employeeData && $hairData && $addressData && $bankData && $companyData  && $companyAddressData )
-            {
-                DB::commit();
-                return back()->with('success','Store data successfully');
+                DB::rollback();
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Failed to store users',
+                ], 500);
             }
             else
             {
-                return back()->with('error','Not store data');
+                // ====================================================
+                // EVERYTHING SUCCESSFUL
+                // ====================================================
+                DB::commit();
+                // return response()->json([
+                //     'status' => true,
+                //     'message' => 'Users stored successfully',
+                //     'total_users' => count($usersDataApi)
+                // ]);
+                return view('API.showAllUser');
             }
         }
         catch(\Exception $e)
         {
             DB::rollback();
-            dd("Store error",$e->getMessage());
+           return response()->json([
+                'status' => false,
+                'message' => 'Failed to store users',
+                'error' => $e->getMessage(),
+            ], 500);
         }
     }
 }

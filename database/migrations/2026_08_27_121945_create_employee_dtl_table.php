@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('age');
             $table->string('gender');
             $table->string('email');
-            $table->integer('phone');
+            $table->string('phone',30);
             $table->string('username');
             $table->date('birthday');
             $table->string('bloodGroup');

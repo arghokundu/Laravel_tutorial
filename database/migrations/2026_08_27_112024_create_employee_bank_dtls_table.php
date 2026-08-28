@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('employee_bank_dtls', function (Blueprint $table) {
             $table->id('emp_bank_id_pk');
-            $table->date('cardExpire');
+            $table->string('cardExpire',5);
             $table->bigInteger('cardNumber');
             $table->String('cardType');
             $table->string('currency');
