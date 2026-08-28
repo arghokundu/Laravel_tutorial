@@ -57,7 +57,38 @@ class UserApiController extends Controller
 
         DB::beginTransaction();
 
-        try {
+        try 
+        {
+            // ==================================================
+            // CHECK WHETHER USERS ALREADY EXIST
+            // ==================================================
+            $existingUsers = [];
+            foreach ($usersDataApi as $user) 
+            {
+                $email = $user['email'] ?? null;
+                if (!$email) 
+                {
+                    continue;
+                }
+                $exists = Employee_Dtl::where('email', $email)->exists();
+                if ($exists) 
+                {
+                    $existingUsers[] = $email;
+                }
+            }
+            // ==================================================
+            // IF ANY USER ALREADY EXISTS
+            // STOP EVERYTHING
+            // ==================================================
+            if (!empty($existingUsers)) 
+            {
+                DB::rollBack();
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data already exists',
+                    'existing_emails' => $existingUsers
+                ], 409);
+            }
 
             // ====================================================
             // ARRAYS FOR BULK INSERT
