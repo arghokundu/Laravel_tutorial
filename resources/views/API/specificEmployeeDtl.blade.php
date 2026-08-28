@@ -1,5 +1,11 @@
 @extends('boot_link_html')
 @section('main_content')
+<!-- {{--@php
+        $company = $empdata->Employee_Dtlscompany;
+        $address = $company?->Company_dtlsAddress;
+    @endphp--}}
+    <td>{{--{{ $address?->address ?? 'NA' }}</td>
+    <td>{{ $company?->company_name ?? 'NA' }}--}}</td> -->
 <div class="container mt-4">
     <div class="card mb-3">
         <div class="card-header">
