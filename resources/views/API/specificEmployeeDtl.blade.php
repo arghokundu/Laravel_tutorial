@@ -1,4 +1,4 @@
-@extends('boot_link_html')
+@extends('layouts.mainApp')
 @section('main_content')
 <!-- {{--@php
         $company = $empdata->Employee_Dtlscompany;
