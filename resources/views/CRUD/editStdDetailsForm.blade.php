@@ -1,4 +1,4 @@
-@extends('boot_link_html')
+@extends('layouts.mainApp')
 @section('main_content')
 <div class="container mt-5">
     <div class="card">

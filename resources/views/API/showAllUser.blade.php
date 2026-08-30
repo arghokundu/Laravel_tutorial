@@ -1,4 +1,4 @@
-@extends('boot_link_html')
+@extends('layouts.mainApp')
 @section('main_content')
 <div class="container mt-5 mb-5">
     <div class="card">
@@ -43,7 +43,7 @@
                     <tbody>
                         @foreach($employeeData as $empdata)
                         <tr>
-                            <td>{{$loop->iteration}}</td>
+                            <td>{{$employeeData->firstItem() + $loop->index}}</td>
                             <td class="text-nowrap">
                                 {{$empdata->firstName}} {{$empdata->maidenName}} {{$empdata->lastName}}
                             </td>
