@@ -336,4 +336,18 @@ class UserApiController extends Controller
      
         return view('API.specificEmployeeDtl',compact('empdata'));
     }
+    // ----------------Edit data----------------
+    public function editEmployeeDataFetch($empId)
+    {
+        $empdata=Employee_Dtl::with('Employee_Hair','Emplyee_DtlsAddress','Employee_DtlsBank','Employee_Dtlscompany',
+            'Employee_Dtlscompany.Company_dtlsAddress')
+            ->select('emp_id_pk','firstName','maidenName','lastName',
+            'age','gender','email','phone','username','birthday',
+            'bloodGroup','university','company_id_fk','emp_hair_id_fk',
+            'emp_address_id_fk','emp_bank_id_fk','height','weight','eyeColor')->findOrFail($empId);
+
+        $empHair=Employee_hair::select('emp_hair_id_pk','color','type')->get();
+
+        return view('API.editEmpDtl',compact('empdata','empHair'));
+    }
 }

@@ -41,7 +41,7 @@
             <ul class="sidebar-nav">
                 <!-- Active Single Link: Overview -->
                 <li class="nav-item">
-                    <a href="index.html" class="nav-link-custom active" id="navDashboard">
+                    <a href="/" class="nav-link-custom active" id="navDashboard">
                         <div class="link-left">
                             <span class="nav-icon"><i class="bi bi-grid-1x2-fill"></i></span>
                             <span class="nav-text">Dashboard</span>

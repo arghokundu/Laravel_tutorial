@@ -17,3 +17,6 @@ Route::get('/showAll/api/users',[UserApiController::class,'showAllUsersApi']);
 
 // -----------specific view----------
 Route::get('/specific/view/{employeeId}',[UserApiController::class,'specificView']);
+
+// ---------------edit specific user details--------------
+Route::get('/specific/emp/data/edit/{empId}',[UserApiController::class,'editEmployeeDataFetch']);

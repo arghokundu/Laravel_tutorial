@@ -71,7 +71,7 @@
                                 <a href="/api/specific/view/{{$empdata->emp_id_pk}}" class=" btn btn-sm btn-success me-2">
                                     View
                                 </a>
-                                <a href="#" class=" btn btn-sm btn-warning">
+                                <a href="/api/specific/emp/data/edit/{{$empdata->emp_id_pk}}" class=" btn btn-sm btn-warning">
                                     Edit
                                 </a>
                             </td>
