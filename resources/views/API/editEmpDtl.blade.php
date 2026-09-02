@@ -6,7 +6,7 @@
             <h2>Edit Employee Details Here</h2>
             <a href="/api/showAll/api/users" class="btn btn-dark pt-2">Back</a>
         </div>
-        <form action="#" method="post">
+        <form action="/api/data/updated/{{$empdata->emp_id_pk}}" method="post">
             @csrf
             <div class="card-body">
                 <div class="mb-0 ms-4 me-4">

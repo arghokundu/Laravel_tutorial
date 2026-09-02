@@ -20,3 +20,6 @@ Route::get('/specific/view/{employeeId}',[UserApiController::class,'specificView
 
 // ---------------edit specific user details--------------
 Route::get('/specific/emp/data/edit/{empId}',[UserApiController::class,'editEmployeeDataFetch']);
+
+// ----------------update data----------------
+Route::post('/data/updated/{empId}',[UserApiController::class,'updateEmpData']);

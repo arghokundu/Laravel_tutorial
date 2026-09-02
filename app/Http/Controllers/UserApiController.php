@@ -350,4 +350,37 @@ class UserApiController extends Controller
 
         return view('API.editEmpDtl',compact('empdata','empHair'));
     }
+    // -------------------update------
+    public function updateEmpData($empId,Request $emprequest)
+    {
+        DB::beginTransaction();
+        try
+        {
+            $updateData=Employee_Dtl::findOrFail($empId);
+
+            $updateData->firstName=strtoUpper($emprequest->fname);
+            $updateData->maidenName=strtoUpper($emprequest->mname);
+            $updateData->lastName=strtoUpper($emprequest->lname);
+            $updateData->age=$emprequest->age;
+            $updateData->gender=$emprequest->gender;
+            $updateData->email=$emprequest->email;
+            $updateData->phone=$emprequest->phno;
+            $updateData->username=$emprequest->uname;
+            $updateData->birthday=$emprequest->d0b;
+            $updateData->bloodGroup=$emprequest->bldgp;
+            $updateData->height=$emprequest->height;
+            $updateData->weight=$emprequest->weight;
+            $updateData->eyeColor=$emprequest->eyecolor;
+            $updateData->university=$emprequest->university;
+            $updateData->emp_hair_id_fk=$emprequest->haircolortype;
+            $updateData->save();
+            DB::commit();
+            return redirect('/api/showAll/api/users');
+        }
+        catch(\Exception $e)
+        {
+            DB::rollback();
+            dd('Update Error',$e->getMessage());
+        }
+    }
 }
