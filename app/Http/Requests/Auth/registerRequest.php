@@ -28,4 +28,12 @@ class registerRequest extends FormRequest
             'password'=>'required|confirmed'
         ];
     }
+    public function messages():array
+    {
+        return [
+            'name.required'=>'Name field is required',
+            'email.required'=>'Email is required',
+            'password.required'=>'Password is required'
+        ];
+    }
 }
