@@ -12,7 +12,7 @@ class registerRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class registerRequest extends FormRequest
     {
         return [
             'name'=>'required|regex:/^[A-Za-z ]+$/',
-            'email'=>'required|email',
+            'email'=>'required|email|unique:register_table_data,email',
             'password'=>'required|confirmed'
         ];
     }
@@ -33,6 +33,7 @@ class registerRequest extends FormRequest
         return [
             'name.required'=>'Name field is required',
             'email.required'=>'Email is required',
+            'email.unique' => 'This email already exists on the site',
             'password.required'=>'Password is required'
         ];
     }

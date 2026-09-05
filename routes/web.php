@@ -12,6 +12,8 @@ Route::get('/', function () {
 Route::get('/login',[loginController::class,'showLoginForm']);
 // ---------------reguster-------------
 Route::get('/register',[registerController::class,'showRegisterForm']);
+// ---------------------store register data-----------
+Route::post('/store/registerData',[registerController::class,'storeRegisterData']);
 // ===============================================================================
 //                                  CRUD 
 // ===============================================================================

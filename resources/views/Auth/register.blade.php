@@ -43,10 +43,11 @@
                         <p class="text-muted small mb-0">
                             Create your account
                         </p>
+    
                     </div>
                     <!-- Card Body -->
                     <div class="card-body p-4">
-                        <form action="#" method="POST">
+                        <form action="/store/registerData" method="post">
                             @csrf
                             <!-- Name -->
                             <div class="mb-3">
@@ -60,11 +61,11 @@
                                     <input type="text" name="name" id="name" class="form-control"
                                         value="{{ old('name') }}" placeholder="Enter your name">
                                 </div>
-                                 @error('name') 
+                                @error('name')
                                 <span class="text-danger small">
-                                     {{ $message }} 
+                                    {{ $message }}
                                 </span>
-                                 @enderror 
+                                @enderror
                             </div>
                             <!-- Email -->
                             <div class="mb-3">
@@ -78,11 +79,11 @@
                                     <input type="email" name="email" id="email" class="form-control"
                                         value="{{ old('email') }}" placeholder="Enter your email">
                                 </div>
-                                 @error('email') 
+                                @error('email')
                                 <span class="text-danger small">
-                                     {{ $message }} 
+                                    {{ $message }}
                                 </span>
-                                 @enderror 
+                                @enderror
                             </div>
                             <!-- Password -->
                             <div class="mb-3">
@@ -101,11 +102,11 @@
                                         </i>
                                     </button>
                                 </div>
-                                 @error('password') 
+                                @error('password')
                                 <span class="text-danger small">
-                                     {{ $message }} 
+                                    {{ $message }}
                                 </span>
-                                 @enderror 
+                                @enderror
                             </div>
                             <!-- Confirm Password -->
                             <div class="mb-4">
@@ -125,11 +126,11 @@
                                         </i>
                                     </button>
                                 </div>
-                                 @error('password_confirmation') 
+                                @error('password_confirmation')
                                 <span class="text-danger small">
-                                     {{ $message }} 
+                                    {{ $message }}
                                 </span>
-                                 @enderror 
+                                @enderror
                             </div>
                             <!-- Register Button -->
                             <div class="d-grid">
