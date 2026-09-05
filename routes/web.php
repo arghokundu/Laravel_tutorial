@@ -2,11 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CrudController;
+use App\Http\Controllers\Auth\loginController;
+use App\Http\Controllers\Auth\registerController;
 
 Route::get('/', function () {
     return view('layouts.mainApp');
 });
-
+// ---------------login---------
+Route::get('/login',[loginController::class,'showLoginForm']);
+// ---------------reguster-------------
+Route::get('/register',[registerController::class,'showRegisterForm']);
 // ===============================================================================
 //                                  CRUD 
 // ===============================================================================

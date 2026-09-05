@@ -93,11 +93,11 @@
 
             <!-- Sign In & Sign Up Header Quick Actions -->
             <div class="d-none d-sm-flex align-items-center gap-2 me-1">
-              <a href="login.html" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1 px-2.5 py-1" style="font-size: 0.825rem; font-weight: 500;">
+              <a href="/login" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1 px-2.5 py-1" style="font-size: 0.825rem; font-weight: 500;">
                 <i class="bi bi-box-arrow-in-right"></i>
-                <span>Sign In</span>
+                <span>Log In</span>
               </a>
-              <a href="signup.html" class="btn btn-sm btn-primary d-inline-flex align-items-center gap-1 px-2.5 py-1" style="font-size: 0.825rem; font-weight: 500;">
+              <a href="/register" class="btn btn-sm btn-primary d-inline-flex align-items-center gap-1 px-2.5 py-1" style="font-size: 0.825rem; font-weight: 500;">
                 <i class="bi bi-person-plus-fill"></i>
                 <span>Sign Up</span>
               </a>
