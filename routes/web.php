@@ -16,16 +16,19 @@ Route::get('/register',[registerController::class,'showRegisterForm']);
 Route::post('/store/registerData',[registerController::class,'storeRegisterData']);
 // ===============================================================================
 //                                  CRUD 
-// ===============================================================================
-// -------------------show form-----------------
-Route::get('/formShow',[CrudController::class,'ShowFormStd']);
-// ----------------------store form--------------------
-Route::post('/storeData',[CrudController::class,'storeData']);
-// -----------------------show all List stident-------------
-Route::get('/showAllStudentList',[CrudController::class,'ShowAllStdList']);
-// ------------------------Edit form-----------------------
-Route::get('/editData/{studentId}',[CrudController::class,'EditData']);
-// ------------------------update form----------------------------
-Route::post('/updateData/{studentId}',[CrudController::class,'updateData']);
-// --------------------------view specific data----------------
-Route::get('/specific/data/{studentId}',[CrudController::class,'specificData']);
+// =========================================================================================
+Route::middleware('checkUserLogin')->group(function()
+{
+    // -------------------show form-----------------
+    Route::get('/formShow',[CrudController::class,'ShowFormStd']);
+    // ----------------------store form--------------------
+    Route::post('/storeData',[CrudController::class,'storeData']);
+    // -----------------------show all List stident-------------
+    Route::get('/showAllStudentList',[CrudController::class,'ShowAllStdList']);
+    // ------------------------Edit form-----------------------
+    Route::get('/editData/{studentId}',[CrudController::class,'EditData']);
+    // ------------------------update form----------------------------
+    Route::post('/updateData/{studentId}',[CrudController::class,'updateData']);
+    // --------------------------view specific data----------------
+    Route::get('/specific/data/{studentId}',[CrudController::class,'specificData']);
+});
