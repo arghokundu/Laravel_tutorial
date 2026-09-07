@@ -72,6 +72,7 @@
                             <i class="bi bi-chevron-right dropdown-chevron"></i>
                         </div>
                     </a>
+
                     <ul class="sidebar-submenu" style="display: none;">
                         <li><a href="/api/showAll/api/users" class="submenu-link 
                           {{request()->is('api/showAll/api/users') ? 'active' : '' }}"><i
@@ -84,12 +85,31 @@
                         <li><a href="#" class="submenu-link"><i class="bi bi-shield-check"></i>Roles & Permissions</a>
                         </li>
                     </ul>
+
                 </li>
             </ul>
 
+            <ul class="sidebar-nav">
+                <!-- Dropdown Menu: Employees & User Management -->
+                <li class="nav-item">
+                    <a href="javascript:void(0);" class="nav-link-custom" data-sidebar-toggle="dropdown"
+                        aria-expanded="false" id="navDropdownUsers">
+                        <div class="link-left {{request()->is('showAllStudentList') ? 'active' : '' }}">
+                            <span class="nav-icon"><i class="bi bi-people-fill"></i></span>
+                            <span class="nav-text">CRUD Student</span>
+                        </div>
+                        <div class="link-right">
+                            <i class="bi bi-chevron-right dropdown-chevron"></i>
+                        </div>
+                    </a>
 
-
-
+                    <ul class="sidebar-submenu" style="display: none;">
+                        <li><a href="showAllStudentList" class="submenu-link 
+                          {{request()->is('showAllStudentList') ? 'active' : '' }}"><i
+                                    class="bi bi-person-lines-fill"></i>Student List</a></li>
+                    </ul>
+                </li>
+            </ul>
 
         </div>
 

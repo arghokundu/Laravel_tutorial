@@ -10,6 +10,8 @@ Route::get('/', function () {
 });
 // ---------------login---------
 Route::get('/login',[loginController::class,'showLoginForm']);
+// ---------------check user login or not -----------
+Route::post('/login/check',[loginController::class,'checkUserLoginOrNot']);
 // ---------------reguster-------------
 Route::get('/register',[registerController::class,'showRegisterForm']);
 // ---------------------store register data-----------

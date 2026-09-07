@@ -23,7 +23,7 @@ class registerController extends Controller
             $regUser=new RegisterUser();
             
             $regUser->name=strtoupper($regreq->name);
-            $regUser->email=strtoLower($regreq->email);
+            $regUser->email=strtolower($regreq->email);
             $regUser->password=Hash::make($regreq->password);
             $regUser->created_at=now();
             
@@ -35,8 +35,8 @@ class registerController extends Controller
             }
             else
             {
-                return back()->with('error','Not store successfully');
                 DB::rollback();
+                return back()->with('error','Not store successfully');
             }
         }
         catch(\Exception $e)

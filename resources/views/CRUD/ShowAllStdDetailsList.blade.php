@@ -31,15 +31,15 @@
                     <thead class="table-dark">
                         <tr>
                             <th>Sl.no</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone No</th>
-                            <th>Pin Code</th>
-                            <th>Address</th>
-                            <th>State</th>
-                            <th>District</th>
-                            <th>Subdivision</th>
-                            <th>Action</th>
+                            <th class="text-nowrap">Name</th>
+                            <th class="text-nowrap">Email</th>
+                            <th class="text-nowrap">Phone No</th>
+                            <th class="text-nowrap">Pin Code</th>
+                            <th class="text-nowrap">Address</th>
+                            <th class="text-nowrap">State</th>
+                            <th class="text-nowrap">District</th>
+                            <th class="text-nowrap">Subdivision</th>
+                            <th class="text-nowrap">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,14 +48,14 @@
                             <td>
                                 {{ $studentsDetails->firstItem() + $loop->index }}
                             </td>
-                            <td>{{ $stdDtl->Name }}</td>
-                            <td>{{ $stdDtl->Email }}</td>
-                            <td>{{ $stdDtl->phoneNo }}</td>
-                            <td>{{ $stdDtl->pin }}</td>
-                            <td>{{ $stdDtl->Address }}</td>
-                            <td>{{ $stdDtl->state->state_name }}</td>
-                            <td>{{ $stdDtl->district->district_name }}</td>
-                            <td>{{ $stdDtl->subdivision->subdiv_name }}</td>
+                            <td class="text-nowrap">{{ $stdDtl->Name }}</td>
+                            <td class="text-nowrap">{{ $stdDtl->Email }}</td>
+                            <td class="text-nowrap">{{ $stdDtl->phoneNo }}</td>
+                            <td class="text-nowrap">{{ $stdDtl->pin }}</td>
+                            <td class="text-nowrap">{{ $stdDtl->Address }}</td>
+                            <td class="text-nowrap">{{ $stdDtl->state->state_name }}</td>
+                            <td class="text-nowrap">{{ $stdDtl->district->district_name }}</td>
+                            <td class="text-nowrap">{{ $stdDtl->subdivision->subdiv_name }}</td>
                             <td>
                                 <div class="d-flex gap-1">
                                     <a href="/editData/{{ Crypt::encrypt($stdDtl->student_id_pk) }}" class="btn btn-sm btn-warning">

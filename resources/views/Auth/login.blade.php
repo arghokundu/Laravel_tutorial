@@ -74,7 +74,7 @@
                             {{ session('error') }}
                         </div>
                         @endif
-                        <form action="#" method="POST">
+                        <form action="/login/check" method="POST">
                             @csrf
                             <!-- Email -->
                             <div class="mb-3">

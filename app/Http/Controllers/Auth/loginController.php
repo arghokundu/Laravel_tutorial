@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\support\Facade\DB;
-use Illuminate\support\Facade\Hash;
+use Illuminate\support\Facades\DB;
+use Illuminate\support\Facades\Hash;
+use Illuminate\support\Facades\Auth;
 use App\Models\Auth\RegisterUser;
 use App\Http\Requests\Auth\loginRequest;
 
@@ -20,18 +21,23 @@ class loginController extends Controller
         DB::beginTransaction();
         try
         {
-            $loginemail=strtolower($loginreq->email);
-            $userEmailCheck=RegisterUser::where('email',$loginemail)->first();
-            if(!userEmailCheck)
+            $userloginemail=strtolower($loginreq->email);
+            $userloginPassword=$loginreq->password;
+            // Find user using email
+            $userEmailCheckAndPassword=RegisterUser::where('email',$userloginemail)->first();
+            // Email does not exist
+            if(!$userEmailCheckAndPassword)
             {
                 DB::rollback();
                 return back()->with('error','Email doesnot exists first register then login');
             }
-            if(!Hash::check($userEmailCheck->password,$loginemail))
+            // Check password because password is hash
+            if(!Hash::check($userloginPassword,$userEmailCheckAndPassword->password))
             {
-                return back()->with('error','Email doesnot exists');  
+                return back()->with('error','password doesnot match');  
             }
-            Auth::login($userEmailCheck);
+            // Email AND password are correct
+            Auth::login($userEmailCheckAndPassword);
            
             $loginreq->session()->regenerate();
            
@@ -42,6 +48,7 @@ class loginController extends Controller
         catch(\Exception $e)
         {
             DB::rollback();
+            dd('not login',$e->getMessage(),strlen($userEmailCheckAndPassword->password));
             return back()->with('error','Something went wrong on the site');
         }
     }
