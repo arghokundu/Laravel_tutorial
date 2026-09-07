@@ -16,15 +16,21 @@ class checkUserLoginOrNot
      */
     public function handle(Request $request, Closure $next): Response
     {
-    //     dd(
-    //     Auth::check(),
-    //     Auth::user(),
-    //     $request->session()->getId()
-    // );
-        if(!Auth::check())
+        // User is not logged in
+        if (!Auth::check())
         {
-            return back()->with('error','user not loggin');
+            return redirect('/login')->with('error', 'Please login first.');
         }
-        return $next($request);
+
+        // User is logged in
+        $response = $next($request);
+
+        // Don't allow browser to cache protected pages
+        $response->headers->set('Cache-Control','no-store, no-cache, must-revalidate, max-age=0');
+
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', '0');
+
+        return $response;
     }
 }

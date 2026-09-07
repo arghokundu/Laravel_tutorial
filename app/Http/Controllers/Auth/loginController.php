@@ -34,6 +34,7 @@ class loginController extends Controller
             // Check password because password is hash
             if(!Hash::check($userloginPassword,$userEmailCheckAndPassword->password))
             {
+                DB::rollback();
                 return back()->with('error','password doesnot match');  
             }
             // Email AND password are correct
