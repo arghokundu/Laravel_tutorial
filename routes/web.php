@@ -16,6 +16,8 @@ Route::post('/login/check',[loginController::class,'checkUserLoginOrNot']);
 Route::get('/register',[registerController::class,'showRegisterForm']);
 // ---------------------store register data-----------
 Route::post('/store/registerData',[registerController::class,'storeRegisterData']);
+// ----------------------logout--------------
+Route::get('/logout',[loginController::class,'logOut']);
 // ===============================================================================
 //                                  CRUD 
 // =========================================================================================

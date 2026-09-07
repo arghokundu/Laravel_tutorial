@@ -52,4 +52,15 @@ class loginController extends Controller
             return back()->with('error','Something went wrong on the site');
         }
     }
+    // ---------logout------
+    public function logOut(Request $loginreq)
+    {
+        Auth::logout();
+
+        $loginreq->session()->invalidate();
+
+        $loginreq->session()->regenerateToken();
+
+        return redirect('/login')->with('success','Logout successfully.');
+    }
 }
