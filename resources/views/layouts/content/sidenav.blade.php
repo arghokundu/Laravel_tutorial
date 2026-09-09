@@ -127,7 +127,7 @@
 
                     <ul class="sidebar-submenu" style="display: none;">
                         <li><a href="ai-chat" class="submenu-link {{request()->is('ai-chat') ? 'active' : '' }}">
-                         <i class="bi bi-person-lines-fill"></i>Ai Uses</a></li>
+                         <i class="bi bi-person-lines-fill"></i>Ai Chat</a></li>
                     </ul>
                 </li>
             </ul>
