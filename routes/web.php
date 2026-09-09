@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CrudController;
 use App\Http\Controllers\Auth\loginController;
 use App\Http\Controllers\Auth\registerController;
+use App\Http\Controllers\AIController;
 
 Route::get('/', function () {
     return view('layouts.mainApp');
@@ -36,3 +37,17 @@ Route::middleware('checkUserLogin')->group(function()
     // --------------------------view specific data----------------
     Route::get('/specific/data/{studentId}',[CrudController::class,'specificData']);
 });
+
+/*
+|--------------------------------------------------------------------------
+| AI Chat Routes
+|--------------------------------------------------------------------------
+*/
+
+// Show AI chat page
+Route::get('/ai-chat', [AIController::class, 'index'])
+    ->name('ai.chat');
+
+// Send question to AI
+Route::post('/ai-chat', [AIController::class, 'ask'])
+    ->name('ai.ask');

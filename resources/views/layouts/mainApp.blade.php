@@ -23,6 +23,8 @@
 
     <!-- Master Centralized Common CSS -->
     <link rel="stylesheet" href="{{asset('assets/css/common.css')}}">
+    <!-- chat Common CSS -->
+    <link rel="stylesheet" href="{{asset('assets/css/chat.css')}}">
 </head>
 
 <body>

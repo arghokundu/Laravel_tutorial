@@ -111,6 +111,27 @@
                 </li>
             </ul>
 
+            <ul class="sidebar-nav">
+                <!-- Dropdown Menu: Employees & User Management -->
+                <li class="nav-item">
+                    <a href="javascript:void(0);" class="nav-link-custom" data-sidebar-toggle="dropdown"
+                        aria-expanded="false" id="navDropdownUsers">
+                        <div class="link-left {{request()->is('ai-chat') ? 'active' : '' }}">
+                            <span class="nav-icon"><i class="bi bi-people-fill"></i></span>
+                            <span class="nav-text">AI Uses</span>
+                        </div>
+                        <div class="link-right">
+                            <i class="bi bi-chevron-right dropdown-chevron"></i>
+                        </div>
+                    </a>
+
+                    <ul class="sidebar-submenu" style="display: none;">
+                        <li><a href="ai-chat" class="submenu-link {{request()->is('ai-chat') ? 'active' : '' }}">
+                         <i class="bi bi-person-lines-fill"></i>Ai Uses</a></li>
+                    </ul>
+                </li>
+            </ul>
+
         </div>
 
     </aside>
