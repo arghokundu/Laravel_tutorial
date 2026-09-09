@@ -36,18 +36,19 @@ Route::middleware('checkUserLogin')->group(function()
     Route::post('/updateData/{studentId}',[CrudController::class,'updateData']);
     // --------------------------view specific data----------------
     Route::get('/specific/data/{studentId}',[CrudController::class,'specificData']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | AI Chat Routes
+    |--------------------------------------------------------------------------
+    */
+
+    // Show AI chat page
+    Route::get('/ai-chat', [AIController::class, 'index'])
+        ->name('ai.chat');
+
+    // Send question to AI
+    Route::post('/ai-chat', [AIController::class, 'ask'])
+        ->name('ai.ask');
 });
 
-/*
-|--------------------------------------------------------------------------
-| AI Chat Routes
-|--------------------------------------------------------------------------
-*/
-
-// Show AI chat page
-Route::get('/ai-chat', [AIController::class, 'index'])
-    ->name('ai.chat');
-
-// Send question to AI
-Route::post('/ai-chat', [AIController::class, 'ask'])
-    ->name('ai.ask');

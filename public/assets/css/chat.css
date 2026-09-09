@@ -1,7 +1,12 @@
+/* =========================================================
+   GLOBAL
+========================================================= */
+
 * {
     box-sizing: border-box;
 }
 
+html,
 body {
     margin: 0;
     padding: 0;
@@ -14,6 +19,7 @@ body {
 
 /* =========================================================
    MAIN AI CONTAINER
+   FIXED HEIGHT
 ========================================================= */
 
 .ai-container {
@@ -22,7 +28,19 @@ body {
 
     max-width: 95%;
 
-    margin: 40px auto;
+    /*
+       Adjust this depending on your mainApp header height.
+       This makes the chatbot fit inside the screen.
+    */
+    height: calc(100vh - 150px);
+
+    min-height: 500px;
+
+    margin: 25px auto;
+
+    display: flex;
+
+    flex-direction: column;
 
     background: white;
 
@@ -37,15 +55,20 @@ body {
 
 /* =========================================================
    HEADER
+   FIXED - DOES NOT SCROLL
 ========================================================= */
 
 .ai-header {
 
-    padding: 25px 30px;
+    flex-shrink: 0;
+
+    padding: 7px 7px;
 
     border-bottom: 1px solid #eee;
 
     text-align: center;
+
+    background: white;
 }
 
 .ai-header h1 {
@@ -69,19 +92,57 @@ body {
 
 /* =========================================================
    CHAT BOX
+   ⭐ ONLY THIS AREA SCROLLS
 ========================================================= */
 
 .chat-box {
 
-    min-height: 400px;
+    /*
+       VERY IMPORTANT
+    */
+    flex: 1;
 
-    max-height: 500px;
+    min-height: 0;
 
     overflow-y: auto;
+
+    overflow-x: hidden;
 
     padding: 25px;
 
     background: #fafafa;
+
+    /*
+       Smooth scrolling
+    */
+    scroll-behavior: smooth;
+}
+
+
+/* =========================================================
+   CUSTOM SCROLLBAR
+========================================================= */
+
+.chat-box::-webkit-scrollbar {
+
+    width: 8px;
+}
+
+.chat-box::-webkit-scrollbar-track {
+
+    background: #f1f1f1;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+
+    background: #bdbdbd;
+
+    border-radius: 10px;
+}
+
+.chat-box::-webkit-scrollbar-thumb:hover {
+
+    background: #888;
 }
 
 
@@ -144,7 +205,7 @@ body {
 
 
 /* =========================================================
-   ICON
+   MESSAGE ICON
 ========================================================= */
 
 .message-icon {
@@ -180,6 +241,8 @@ body {
     line-height: 1.6;
 
     word-break: break-word;
+
+    overflow-wrap: anywhere;
 }
 
 
@@ -247,17 +310,25 @@ body {
 
 
 /* =========================================================
-   INPUT FORM
+   CHAT FORM
+   FIXED AT BOTTOM
 ========================================================= */
 
 .chat-form {
 
-    padding: 20px;
+    flex-shrink: 0;
+
+    padding: 15px 20px;
 
     border-top: 1px solid #eee;
 
     background: white;
 }
+
+
+/* =========================================================
+   INPUT CONTAINER
+========================================================= */
 
 .input-container {
 
@@ -266,22 +337,26 @@ body {
     gap: 10px;
 
     align-items: flex-end;
+
+    width: 100%;
 }
 
 
 /* =========================================================
-   TEXTAREA
+   QUESTION TEXTAREA
 ========================================================= */
 
-textarea {
+.question-input {
 
     flex: 1;
 
-    min-height: 21px;
+    height: 55px;
 
-    max-height: 56px;
+    min-height: 55px;
 
-    padding: 14px;
+    max-height: 120px;
+
+    padding: 15px;
 
     font-size: 15px;
 
@@ -292,9 +367,11 @@ textarea {
     border-radius: 10px;
 
     resize: vertical;
+
+    overflow-y: auto;
 }
 
-textarea:focus {
+.question-input:focus {
 
     outline: none;
 
@@ -306,11 +383,11 @@ textarea:focus {
    SEND BUTTON
 ========================================================= */
 
-button {
+.send-button {
 
     height: 55px;
 
-    padding: 0 22px;
+    padding: 0 25px;
 
     border: none;
 
@@ -323,9 +400,11 @@ button {
     font-size: 15px;
 
     cursor: pointer;
+
+    flex-shrink: 0;
 }
 
-button:hover {
+.send-button:hover {
 
     background: #333;
 }
@@ -377,32 +456,55 @@ button:hover {
 
         width: 95%;
 
-        margin: 20px auto;
+        max-width: 95%;
+
+        height: calc(100vh - 120px);
+
+        min-height: 450px;
+
+        margin: 15px auto;
     }
 
-    .chat-box {
 
-        min-height: 350px;
+    .ai-header {
 
         padding: 15px;
     }
+
+
+    .ai-header h1 {
+
+        font-size: 22px;
+    }
+
+
+    .chat-box {
+
+        padding: 15px;
+    }
+
 
     .message {
 
         max-width: 95%;
     }
 
+
     .input-container {
 
         flex-direction: column;
+
+        align-items: stretch;
     }
 
-    textarea {
+
+    .question-input {
 
         width: 100%;
     }
 
-    button {
+
+    .send-button {
 
         width: 100%;
     }

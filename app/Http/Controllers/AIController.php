@@ -22,7 +22,7 @@ class AIController extends Controller
     {
         // Validate user input
         $request->validate([
-            'question' => 'required|string|max:2000',
+            'question' => 'required|string|max:20000',
         ]);
         try 
         {
